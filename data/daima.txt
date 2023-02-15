@@ -1,0 +1,85 @@
+#五分类gain建模
+library(xgboost)
+library(caret)
+library(ggplot2)
+library(lattice)
+library(Matrix)
+set.seed(1234)
+trainset <- read.csv("C:/Users/17449/Desktop/建模代码/trainset.csv")
+trainset1 <- data.matrix(trainset[,c(4:82)])
+trainset2 <- Matrix(trainset1,sparse = T)
+train_y <- factor(trainset[,84])
+f <- train_y
+train_y <- as.numeric(f)-1
+traindata <- list(data=trainset2,label=train_y )
+dtrain <- xgb.DMatrix(data=traindata$data,label=traindata$label)
+params <- list(eta = 0.6801917,gamma = 0,max_depth = 10, min_child_weight = 1,subsample = 1, nfold = 10, objective = "multi:softmax",num_class=5)
+fit <- xgboost(params = params,data = trainset1, label = train_y,nrounds = 34, eval_metric = "auc")
+输入测试集
+testset <- read.csv("XXX")
+testset1 <- data.matrix(testset[,c(4:82)])
+testset2 <- Matrix(testset1,sparse = T)
+dtest <- xgb.DMatrix(data=testset2)
+pre <- predict(fit,newdata = dtest)
+write.csv
+
+
+
+#五分类loss
+set.seed(1234)
+trainset <- read.csv("C:/Users/17449/Desktop/建模代码/trainset.csv")
+trainset1 <- data.matrix(trainset[,c(4:82)])
+trainset2 <- Matrix(trainset1,sparse = T)
+train_y <- factor(trainset[,84])
+f <- train_y
+train_y <- as.numeric(f)-1
+traindata <- list(data=trainset2,label=train_y )
+dtrain <- xgb.DMatrix(data=traindata$data,label=traindata$label)
+params <- list(eta = 0.4662765,gamma = 0,max_depth = 10, min_child_weight = 25,subsample = 0.25, nfold = 10, objective = "multi:softmax",num_class=5)
+fit <- xgboost(params = params,data = trainset1, label = train_y,nrounds = 94, eval_metric = "auc")
+输入测试集
+testset <- read.csv("XXX")
+testset1 <- data.matrix(testset[,c(4:82)])
+testset2 <- Matrix(testset1,sparse = T)
+dtest <- xgb.DMatrix(data=testset2)
+pre <- predict(fit,newdata = dtest)
+
+
+#二分类gain
+set.seed(1234)
+trainset <- read.csv("C:/Users/17449/Desktop/建模代码/trainset.csv")
+trainset1 <- data.matrix(trainset[,c(4:82)])
+trainset2 <- Matrix(trainset1,sparse = T)
+train_y <- factor(trainset[,84])
+f <- train_y
+train_y <- as.numeric(f)-1
+traindata <- list(data=trainset2,label=train_y )
+dtrain <- xgb.DMatrix(data=traindata$data,label=traindata$label)
+params <- list(eta = 1,gamma = 0,max_depth = 10, min_child_weight = 1,subsample = 1, nfold = 10, objective = "binary:logistic")
+fit <- xgboost(params = params,data = trainset1, label = train_y,nrounds = 72, eval_metric = "auc")
+testset <- read.csv("XXX")
+testset1 <- data.matrix(testset[,c(4:82)])
+testset2 <- Matrix(testset1,sparse = T)
+dtest <- xgb.DMatrix(data=testset2)
+pre <- predict(fit,newdata = dtest)
+pre <- as.numeric(pre > 0.50)
+
+
+#二分类loss
+set.seed(1234)
+trainset <- read.csv("C:/Users/17449/Desktop/建模代码/trainset.csv")
+trainset1 <- data.matrix(trainset[,c(4:82)])
+trainset2 <- Matrix(trainset1,sparse = T)
+train_y <- factor(trainset[,84])
+f <- train_y
+train_y <- as.numeric(f)-1
+traindata <- list(data=trainset2,label=train_y )
+dtrain <- xgb.DMatrix(data=traindata$data,label=traindata$label)
+params <- list(eta = 0.4573872,gamma = 10.89514,max_depth = 5, min_child_weight = 12.95125,subsample = 0.4959562, nfold = 10, objective = "binary:logistic")
+fit <- xgboost(params = params,data = trainset1, label = train_y,nrounds = 75, eval_metric = "auc")
+testset <- read.csv("XXX")
+testset1 <- data.matrix(testset[,c(4:82)])
+testset2 <- Matrix(testset1,sparse = T)
+dtest <- xgb.DMatrix(data=testset2)
+pre <- predict(fit,newdata = dtest)
+pre <- as.numeric(pre > 0.50)
