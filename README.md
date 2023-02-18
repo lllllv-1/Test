@@ -3,9 +3,9 @@ dbCNV is a tool to predict the pathogenicity for five-tier classification and bi
 # 2. Requirements
 # 3. Usage and example
 
-'''
+```
 perl cal_feature_v1.pl -i example.txt -n 2
-'''
+```
 
  -i FILE    CNV region file (Chr Start End Tye)
  -n number  the number of pathogenic classification  (2 or 5)
