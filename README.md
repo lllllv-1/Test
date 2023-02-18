@@ -8,6 +8,9 @@ perl cal_feature_v1.pl -i example.txt -n 2
 ```
 
  -i FILE    CNV region file (Chr Start End Tye)
+ 
  -n number  the number of pathogenic classification  (2 or 5)
+ 
  -h HELP    help information
+ 
 The results can be seen in the gain_2_predication_result.txt
